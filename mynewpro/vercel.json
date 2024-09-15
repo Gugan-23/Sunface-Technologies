@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "mynewpro/wsig.py",
+        "use": "@vercel/python",
+          "config":{"maxLambdaSize":"15mb","runtime":"python 3.11.3"}
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "mynewpro/wsig.py"
+      }
+    ]
+  }
+  

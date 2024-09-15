@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+        }
+    
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+        }
+    
+        .login-container {
+            background-color: white;
+            max-width: 300px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 12.5);
+        }
+    
+        .login-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 15px 0;
+            box-sizing: border-box;
+        }
+    
+        .login-container p {
+            background-color: white;
+        }
+    
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    
+        .login-container button:hover {
+            background-color: black;
+        }
+    
+        .error {
+            color: red;
+            display: none;
+        }
+    
+        #io {
+            height: 300px;
+            width: 300px;
+            border: none;
+            border-radius: 20px;
+            margin:10px; ;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 12.5);
+            margin-top: 100%;
+            
+        }
+    
+        input[type="radio"] {
+            display: none;
+        }
+    
+        .radio-group {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            justify-content: center;
+        }
+    
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #fff;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+    
+        .radio-group label:hover {
+            background-color: lightblue;
+        }
+    
+        input[type="radio"]:checked + label {
+            background-color: #3498db;
+            color: #fff;
+        }
+    
+        #drop-area {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            margin: 20px;
+        }
+    
+        #drop-area img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    
+        #drop-area.highlight {
+            border-color: #4CAF50;
+        }
+    
+        section {
+            margin-bottom: 30px;
+        }
+    
+        label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://img.freepik.com/vector-premium/concepto-aprendizaje-educacion-linea-estudiantes_662093-225.jpg?w=740" id="io" alt="Profile Image">
+
+    <div class="login-container">
+        <h2>Signup</h2>
+        <form id="signupForm">
+            <input type="text" id="newUsername" placeholder="Username" required>
+            <input type="password" id="newPassword" placeholder="Password" required>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            
+            <div class="radio-group">
+                <input type="radio" id="q1" name="gender" value="male" required>
+                <label for="q1">Male</label>
+                
+                <input type="radio" id="q2" name="gender" value="female" required>
+                <label for="q2">Female</label>
+                
+                <input type="radio" id="q3" name="gender" value="other" required>
+                <label for="q3">Other</label>
+            </div>
+
+            <input type="date" id="nage" placeholder="mm/dd/yyyy" required>
+            
+            <button type="button" onclick="validateSignup()">Signup</button>
+            <button type="button" onclick="back()">Back</button>
+            
+            <p id="signupError" class="error"></p>
+            <p id="signupSuccess" class="success">Account created successfully!</p>
+        </form>
+        
+        <button id="infoButton" type="button" onclick="showInfo()" style="display:none;">Info</button>
+    </div>
+    <section id="drag-drop">
+        <h2>Drag and Drop Your Profile</h2>
+        <div id="drop-area">
+            <p>Drag a picture here or click to select a file</p>
+        </div>
+    </section>
+
+    <script>
+        function back() {
+            window.location.href = "hi.html";
+        }
+
+        function validateSignup() {
+            var newUsername = document.getElementById("newUsername").value;
+            var newPassword = document.getElementById("newPassword").value;
+            var nage = document.getElementById("nage").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var signupError = document.getElementById("signupError");
+            var signupSuccess = document.getElementById("signupSuccess");
+
+            signupError.style.display = "none";
+            signupSuccess.style.display = "none";
+
+            if (newUsername.length < 3) {
+                signupError.innerText = "Username must be at least 3 characters long.";
+                signupError.style.display = "block";
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                signupError.innerText = "Password must be at least 6 characters long.";
+                signupError.style.display = "block";
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                signupError.innerText = "Passwords do not match.";
+                signupError.style.display = "block";
+                return;
+            }
+            
+            showInfo();
+            localStorage.setItem("newUsername", newUsername);
+            localStorage.setItem("newPassword", newPassword);
+            localStorage.setItem("age", nage);
+            signupSuccess.style.display = "block";
+        }
+
+        function showInfo() {
+            window.location.href = "home.html";
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropArea = document.getElementById('drop-area');
+
+            dropArea.addEventListener('click', () => {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.onchange = (event) => {
+                    const files = event.target.files;
+                    handleFiles(files);
+                };
+                fileInput.click();
+            });
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => dropArea.classList.add('highlight'), false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => dropArea.classList.remove('highlight'), false);
+            });
+
+            dropArea.addEventListener('drop', handleDrop, false);
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                handleFiles(files);
+            }
+
+            function handleFiles(files) {
+                ([...files]).forEach(previewFile);
+            }
+
+            function previewFile(file) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    dropArea.innerHTML = '<p>Photo added successfully!</p>';
+                    dropArea.appendChild(img);
+
+                    // Update profile photo in info.html
+                    localStorage.setItem('profilePhoto', reader.result);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+

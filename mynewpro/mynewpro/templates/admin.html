@@ -1,0 +1,22 @@
+<h1>Admin Page</h1>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Actions</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+            <form method="POST" action="/admin">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ user.user_id }}">
+                <input type="hidden" name="action" value="delete_user">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

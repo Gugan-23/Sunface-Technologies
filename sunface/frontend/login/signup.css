@@ -1,0 +1,211 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+  }
+  
+  body {
+    background: linear-gradient(to right, #f8fafc, #eff6ff);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Signup Form */
+  form#signupForm {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 25px;
+  }
+  
+  /* Input Fields */
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="password"],
+  form input[type="tel"],
+  form input[type="search"] {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: 0.3s ease;
+    background-color: #f9fafb;
+  }
+  
+  form input:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    outline: none;
+  }
+  
+  /* Buttons */
+  form button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: #3b82f6;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  form button:hover:not(:disabled) {
+    background: #2563eb;
+  }
+  
+  form button:disabled {
+    background: #a5b4fc;
+    cursor: not-allowed;
+  }
+  
+  /* OTP Section */
+  #emailOtpSection {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  #emailOtpSection input {
+    flex: 1;
+  }
+  
+  /* Country Selector */
+  .select-box {
+    position: relative;
+    margin-bottom: 18px;
+  }
+  
+  .selected-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #f1f5f9;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    transition: 0.3s ease;
+  }
+  
+  .selected-option:hover {
+    border-color: #3b82f6;
+  }
+  
+  .selected-option div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 85px;
+  }
+  
+  #countryCode {
+    font-weight: 600;
+  }
+  
+  #signupPhone {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  /* Dropdown Country List */
+  .options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    max-height: 220px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    display: none;
+    z-index: 10;
+  }
+  
+  .options.active {
+    display: block;
+  }
+  
+  .search-box {
+    padding: 12px 16px;
+    width: 100%;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.95rem;
+    outline: none;
+    background: #f9fafb;
+  }
+  
+  #countriesList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #countriesList li {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+  
+  #countriesList li:hover {
+    background: #e0f2fe;
+  }
+  
+  /* Responsive */
+  @media (max-width: 500px) {
+    form#signupForm {
+      padding: 30px 20px;
+    }
+  
+    #emailOtpSection {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    #emailOtpSection button {
+      width: 100%;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

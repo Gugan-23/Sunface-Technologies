@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup with Email OTP Verification</title>
+  <link rel="stylesheet" href="signup.css" />
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+</head>
+
+<body>
+  <h2>Signup</h2>
+  <form id="signupForm">
+    <input type="text" id="signupUsername" placeholder="Username" required />
+
+    <div class="select-box" id="countrySelectBox">
+      <div class="selected-option" id="selectedOption">
+        <div>
+          <span class="iconify" data-icon="flag:in-4x3" id="selectedFlag"></span>
+          <strong id="countryCode">+91</strong>
+        </div>
+        <input type="tel" id="signupPhone" placeholder="Phone Number" required />
+      </div>
+      <div class="options" id="countryOptions">
+        <input type="text" class="search-box" id="countrySearch" placeholder="Search country" />
+        <ol id="countriesList"></ol>
+      </div>
+    </div>
+
+    <input type="email" id="signupEmail" placeholder="Email" required />
+    <button type="button" id="sendOtpBtn">Send OTP</button>
+
+    <div id="emailOtpSection" style="display:none; margin-top:10px;">
+      <input type="text" id="emailOtpInput" placeholder="Enter Email OTP" />
+      <button type="button" id="verifyEmailBtn" disabled>Verify OTP</button>
+    </div>
+
+    <input type="password" id="signupPassword" placeholder="Password" required />
+    <button type="submit" id="signupSubmitBtn" disabled>Sign Up</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script>
+    const emailInput = document.getElementById('signupEmail');
+    const sendOtpBtn = document.getElementById('sendOtpBtn');
+    const emailOtpSection = document.getElementById('emailOtpSection');
+    const emailOtpInput = document.getElementById('emailOtpInput');
+    const verifyEmailBtn = document.getElementById('verifyEmailBtn');
+    const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+    const messageP = document.getElementById('message');
+
+    const API_BASE = 'http://localhost:5000/api/auth'; // Adjust your API base URL if needed
+
+    function showMessage(msg, isError = true) {
+      messageP.style.color = isError ? 'red' : 'green';
+      messageP.textContent = msg;
+    }
+
+    // Send OTP button click
+    sendOtpBtn.onclick = async () => {
+      const email = emailInput.value.trim();
+      if (!email) return showMessage('Please enter a valid email.');
+
+      sendOtpBtn.disabled = true;
+      showMessage('Sending OTP...', false);
+
+      try {
+        const res = await fetch(`${API_BASE}/signup/request-otp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('OTP sent to your email.', false);
+          emailOtpSection.style.display = 'block';
+          verifyEmailBtn.disabled = false;
+          emailOtpInput.value = '';
+          signupSubmitBtn.disabled = true;
+        } else {
+          showMessage(data.message || 'Failed to send OTP.');
+          sendOtpBtn.disabled = false;
+        }
+      } catch {
+        showMessage('Server error. Try again later.');
+        sendOtpBtn.disabled = false;
+      }
+    };
+
+    // Verify OTP button click
+    verifyEmailBtn.onclick = async () => {
+      const email = emailInput.value.trim();
+      const otp = emailOtpInput.value.trim();
+      if (!otp) return showMessage('Please enter the OTP.');
+
+      verifyEmailBtn.disabled = true;
+      showMessage('Verifying OTP...', false);
+
+      try {
+        const res = await fetch(`${API_BASE}/signup/verify-otp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, otp }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('Email verified successfully!', false);
+          signupSubmitBtn.disabled = false;
+          verifyEmailBtn.disabled = true;
+          sendOtpBtn.disabled = true;
+
+          // Disable email input after successful verification
+          emailInput.disabled = true;
+          emailOtpInput.disabled = true;
+        } else {
+          showMessage(data.message || 'Invalid OTP.');
+          verifyEmailBtn.disabled = false;
+        }
+      } catch {
+        showMessage('Server error. Try again later.');
+        verifyEmailBtn.disabled = false;
+      }
+    };
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>

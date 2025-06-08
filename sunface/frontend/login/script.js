@@ -303,7 +303,7 @@ if (window.Iconify) window.Iconify.scan();
   }
 }
 
-function setDefaultCountry(defaultCode = 'in') {
+function setDefaultCountry(defaultCode = 'af') {
   const defaultCountry = countries.find(c => c.code.toLowerCase() === defaultCode) || countries[0];
   selectedFlag.setAttribute('data-icon', `flag:${defaultCountry.code.toLowerCase()}-4x3`);
   countryCodeElem.textContent = `+${defaultCountry.phone}`;
@@ -332,7 +332,7 @@ selectedOption.addEventListener('click', () => {
 countrySearch.addEventListener('input', filterCountries);
 
 // Set default selected country on page load (e.g., India)
-function setDefaultCountry(defaultCode = 'in') {
+function setDefaultCountry(defaultCode = 'af') {
   const defaultCountry = countries.find(c => c.code === defaultCode) || countries[0];
   selectedFlag.setAttribute('data-icon', `flag:${defaultCountry.code}-4x3`);
   countryCodeElem.textContent = `+${defaultCountry.phone}`;

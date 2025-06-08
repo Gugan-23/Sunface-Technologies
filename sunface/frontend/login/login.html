@@ -4,55 +4,230 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f4f4f4;
+      font-family: 'Poppins', sans-serif;
+      background: #f2f2f2;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    form {
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1000px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
+
+    .left, .right {
+      flex: 1;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    input {
+
+    .left {
+      background: #fff;
+    }
+
+    .left h2 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .left p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .left input {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      padding: 12px 15px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
     }
-    button {
-      width: 100%;
+
+    .left .forgot {
+      text-align: right;
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .left button {
+      background: #000;
+      color: #fff;
       padding: 12px;
-      background: #007bff;
-      color: white;
       border: none;
+      border-radius: 10px;
       font-weight: bold;
-      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .left .or {
+      text-align: center;
+      margin: 10px 0;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .google-btn {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
       cursor: pointer;
     }
-    button:hover {
-      background: #0056b3;
+
+    .left .signup {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
     }
+
+    .left .signup a {
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+
+    .right {
+      background: #000;
+      color: #fff;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .right img {
+      max-width: 300px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .right h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .right p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    /* Hide image section on small devices */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .right {
+        display: none;
+      }
+
+      .left {
+        padding: 30px 20px;
+      }
+
+      .left h2 {
+        font-size: 22px;
+      }
+
+      .left input,
+      .left button {
+        font-size: 15px;
+      }
+
+      .google-btn {
+        font-size: 13px;
+      }
+    }
+    .password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.toggle-password img {
+  width: 22px;
+  height: 22px;
+  opacity: 0.6;
+}
+
+.toggle-password:hover img {
+  opacity: 1;
+}
+
   </style>
 </head>
 <body>
 
-  <form id="loginForm">
-    <h2>Login</h2>
-    <input type="text" id="identifier" placeholder="Username or Email" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
+  <div class="container">
+    <div class="left">
+      <h2>Welcome Back!</h2>
+      <p>Please enter log in details below</p>
+      <form id="loginForm">
+        <input type="text" id="identifier" placeholder="Email" required />
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+          <span class="toggle-password" onclick="togglePassword()">
+            <img id="eyeIcon" src="https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png" alt="Toggle visibility" />
+          </span>
+        </div>
+        
+        <div class="forgot"><a href="forgetpassword.html">Forgot password?</a></div>
+        <button type="submit">Sign in</button>
+        <div class="or">or continue</div>
+        <div class="google-btn"><img src="https://img.icons8.com/color/16/google-logo.png"/> Log in with Google</div>
+        <div class="signup">
+          Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="right">
+      <img src="login.jpg" alt="3D Character" />
+      <h3>Manage your Website from Anywhere</h3>
+      <p>you can Manage your software on the go with Quicken on the web</p>
+    </div>
+  </div>
 
   <script>
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
@@ -82,16 +257,23 @@
         alert("Login successful!");
         console.log("Token:", data.token);
         console.log("User:", data.user);
-
-        // Redirect or store token if needed
-        // localStorage.setItem("token", data.token);
       } catch (err) {
         console.error("Login error:", err);
         alert("Something went wrong. Please try again.");
       }
     });
+    function togglePassword() {
+  const passwordField = document.getElementById("password");
+  const eyeIcon = document.getElementById("eyeIcon");
+
+  const isVisible = passwordField.type === "text";
+  passwordField.type = isVisible ? "password" : "text";
+  eyeIcon.src = isVisible 
+    ? "https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png"
+    : "https://img.icons8.com/ios-glyphs/30/000000/closed-eye.png";
+}
+
   </script>
-<a href="signup.html">signup</a>
-<a href="forgetpassword.html">forget password</a>
+
 </body>
 </html>

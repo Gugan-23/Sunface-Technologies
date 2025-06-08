@@ -208,4 +208,37 @@
       transform: translateY(0);
     }
   }
+  .signup-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+  
+  .form-side {
+    flex: 1;
+    padding: 40px;
+  }
+  
+  .image-side {
+    flex: 1;
+    background-image: url('/path/to/your/image.jpg'); /* Update path */
+    background-size: cover;
+    background-position: center;
+    display: block;
+  }
+  
+  /* Hide image on small screens */
+  @media (max-width: 768px) {
+    .image-side {
+      display: none;
+    }
+  
+    .signup-wrapper {
+      flex-direction: column;
+    }
+  }
   

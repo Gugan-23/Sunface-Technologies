@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f2f2f2;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1000px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .left, .right {
+      flex: 1;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left {
+      background: #fff;
+    }
+
+    .left h2 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: #000;
+    }
+
+    .left p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
+    .left input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    .left .forgot {
+      text-align: right;
+      font-size: 13px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .left button {
+      background: #000;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .left .or {
+      text-align: center;
+      margin: 10px 0;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .google-btn {
+      background: #fff;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .left .signup {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .left .signup a {
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 5px;
+    }
+
+    .right {
+      background: #000;
+      color: #fff;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .right img {
+      max-width: 300px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .right h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .right p {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    /* Hide image section on small devices */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .right {
+        display: none;
+      }
+
+      .left {
+        padding: 30px 20px;
+      }
+
+      .left h2 {
+        font-size: 22px;
+      }
+
+      .left input,
+      .left button {
+        font-size: 15px;
+      }
+
+      .google-btn {
+        font-size: 13px;
+      }
+    }
+    .password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="left">
+      <h2>Welcome Back!</h2>
+      <p>Please enter log in details below</p>
+      <form id="loginForm">
+        <input type="text" id="identifier" placeholder="Email" required />
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Password" required />
+          
+        </div>
+        
+        <div class="forgot"><a href="forgetpassword.html">Forgot password?</a></div>
+        <button type="submit">Sign in</button>
+        <div class="or">or continue</div>
+        <div class="google-btn"><img src="https://img.icons8.com/color/16/google-logo.png"/> Log in with Google</div>
+        <div class="signup">
+          Don't have an account? <a href="signup.html">Sign Up</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="right">
+      <img src="login.jpg" alt="3D Character" />
+      <h3>Manage your Website from Anywhere</h3>
+      <p>you can Manage your software on the go with Quicken on the web</p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const identifier = document.getElementById("identifier").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!identifier || !password) {
+        alert("Please fill in both fields.");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ identifier, password }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          alert(data.message || "Login failed");
+          return;
+        }
+
+        alert("Login successful!");
+        console.log("Token:", data.token);
+        console.log("User:", data.user);
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("Something went wrong. Please try again.");
+      }
+    });
+    function togglePassword() {
+  const passwordField = document.getElementById("password");
+  const eyeIcon = document.getElementById("eyeIcon");
+
+  const isVisible = passwordField.type === "text";
+  passwordField.type = isVisible ? "password" : "text";
+  eyeIcon.src = isVisible 
+    ? "https://img.icons8.com/ios-glyphs/30/000000/visible--v1.png"
+    : "https://img.icons8.com/ios-glyphs/30/000000/closed-eye.png";
+}
+
+  </script>
+
+</body>
+</html>
